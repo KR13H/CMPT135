@@ -28,13 +28,13 @@ char letterGrade;
 //this function takes in the input from the user for Student Record
 void input(StudentRecord& r)
 {
-	cout << "Please enter your full name: ";
+	cout << "Full name: ";
 	cin >> r.name;
-	cout << "Please enter your marks in Test: ";
+	cout << "Marks in Test: ";
 	cin >> r.test;
-	cout << "Please enter your marks in Midterm: ";
+	cout << "Marks in Midterm: ";
 	cin >> r.midterm;
-	cout << "Please enter you marks in Final: ";
+	cout << "Marks in Final: ";
 	cin >> r.final;
 }
 
@@ -77,7 +77,6 @@ void viewRecord(const StudentRecord r)
 	cout << "Letter grade: " << r.letterGrade << endl;
 }
 
-
 int main()
 {
 	StudentRecord* a;
@@ -87,8 +86,9 @@ int main()
 	a = new StudentRecord[size];
 
 	//take in the input and compute the grade
-	for(int i = 0; i < size; i++)
+	for(int i = 0, j = 1; i < size ; i++, j++)
 	{
+		cout << "Record for student " << j << endl;
 		input(a[i]);
 		a[i].letterGrade = grade(a[i].test, a[i].midterm, a[i].final);
 	}
@@ -98,6 +98,7 @@ int main()
 	{
 		viewRecord(a[i]);
 	}
+
 
 	system("Pause");
 	return 0;
