@@ -1,4 +1,4 @@
-﻿/*10. Consider a StudentRecord struct declared as follows:
+/*10. Consider a StudentRecord struct declared as follows:
 struct StudentRecord
 {
 string name;
