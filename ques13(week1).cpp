@@ -1,4 +1,4 @@
-﻿/* Write a function named searchName that takes three arguments: a dynamic array of structs of type 
+﻿/* 13. Write a function named searchName that takes three arguments: a dynamic array of structs of type 
 StudentRecord, its size, and a string argument and returns the first element of the array you find whose 
 name matches the string argument. If there is no element whose name matches the string argument, 
 please return a StudentRecord value whose name = "Not Found", test = -1, midterm = -1, final = -1, and 
