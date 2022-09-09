@@ -1,4 +1,4 @@
-﻿/* 7. Write a function named reduce that takes one RationalNumber argument by reference and reduces the 
+/* 7. Write a function named reduce that takes one RationalNumber argument by reference and reduces the 
 rational number. Reduction of rational number means to write the rational number in the simplest form 
 possible. Example 7/21 is reduced to 1/3; 2/4 is reduced to 1/2; 15/5 is reduced to 3/1 and so on so forth. 
 Don't jump to write program. Instead think carefully how do we do reduction by hand. Hint:- What is the 
@@ -17,9 +17,15 @@ struct RationalNumber
 };
 
 //this function returns the gcd of two numbers
+//Pre-condtion: b is different from 0 
+
 int gcd(const RationalNumber r)
 {
+	//what if n = 0 and d = some non zero number 
 	int gcd;
+	if(r.a == 0) 
+	gcd = r.b;
+	
 	for(int i = 1; i <= r.a && i <= r.b; i++)
 	{
 		if(r.a %i == 0 && r.b % i == 0)
@@ -60,7 +66,6 @@ int main()
   system("Pause");
   return 0;
 }
-
 
 
 
