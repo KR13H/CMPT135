@@ -39,7 +39,7 @@ RationalNumber::RationalNumber()
 RationalNumber::RationalNumber(const int& a, const int& b)
 {
 	this->a = a;
-	this->b = b;
+	this->b = b != 0 ? b: 1;
 	standardize();
 	reduce();
 }
@@ -179,7 +179,6 @@ bool isPositive(RationalNumber* r, int size)
 			return true;
 		return false;
 	}
-	cout << "ex" << endl;
 }
 
 
