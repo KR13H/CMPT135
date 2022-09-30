@@ -302,7 +302,8 @@ RationalNumber operator-(const int& x, const RationalNumber& r)
 	RationalNumber sub(x,1);
 	return sub - r;
 }
-//Binary multiplication operator that performs r1 * r2RationalNumber RationalNumber::operator*(const RationalNumber& r)
+//Binary multiplication operator that performs r1 * r2
+RationalNumber RationalNumber::operator*(const RationalNumber& r)
 {
 	int a1 = this->a;
 	int b1 = this-> b;
