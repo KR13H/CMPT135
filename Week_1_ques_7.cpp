@@ -26,10 +26,15 @@ int gcd(const RationalNumber r)
 	if(r.a == 0) 
 	gcd = r.b;
 	
-	for(int i = 1; i <= r.a && i <= r.b; i++)
+	
+	int m = abs(r.a);
+	int n = abs(r.b);
+	gcd = m < n ? m : n;
+	while(gcd < 0)
 	{
 		if(r.a %i == 0 && r.b % i == 0)
-			gcd = i;
+			return gcd;
+		gcd--;
 	}
 	return gcd;
 }
