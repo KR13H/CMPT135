@@ -23,26 +23,14 @@ struct RationalNumber
 
 //Pre-condition: takes a Rational number
 //Post-condition: returns a rational number in standard form
-RationalNumber standardize(RationalNumber r)
+void standardize(RationalNumber& r)
 {
-	RationalNumber R;
-	if(r.a > 0 && r.b < 0)
+	if(r.b < 0)
 	{
-		R.a = -1*(r.a);
-		R.b = abs(r.b);
-		return R;
+		r.a *= -1;
+		r.b *= -1;
 	}
-	else if(r.a < 0 && r.b < 0)
-	{
-		R.a = abs(r.a);
-		R.b = abs(r.b);
-		return R;
-	}
-	else
-	{
-		R = r;
-		return R;
-	}
+	
 }
 
 //converting rational number to a string
@@ -64,9 +52,9 @@ int main()
 	cout << "Please enter the denomenator: ";
 	cin >> r.b;
 
-	RationalNumber inS = standardize(r);
+	standardize(r);
 
-	cout << "The rational number in standard form is: " << toString(inS) << endl;
+	cout << "The rational number in standard form is: " << toString(r) << endl;
 
 
 	system("Pause");
