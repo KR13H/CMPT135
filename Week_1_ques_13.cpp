@@ -84,7 +84,9 @@ void viewRecord(const StudentRecord* r, const int size, const char c)
 StudentRecord searchName(const StudentRecord* r, const int size, string name)
 {
 	StudentRecord sRecord;
-	for(int i = 0; i < size; i++)
+	if
+	{
+		for(int i = 0; i < size; i++)
 	{
 		if(r[i].name == name)
 		{
@@ -93,15 +95,19 @@ StudentRecord searchName(const StudentRecord* r, const int size, string name)
 		}
 
 	}
+	}
+	else
+	{
 	// If there is no element whose name matches the string argument, 
 	//please return a StudentRecord value whose name = "Not Found", test = -1, midterm = -1, final = -1, and 
 	//letterGrade = 'N'
-	sRecord.name = "Not Found";
-	sRecord.test = -1;
-	sRecord.midterm = -1;
-	sRecord.final = -1;
-	sRecord.letterGrade = 'N';
-	return sRecord;
+		sRecord.name = "Not Found";
+	        sRecord.test = -1;
+	        sRecord.midterm = -1;
+	        sRecord.final = -1;
+	        sRecord.letterGrade = 'N';
+	        return sRecord;
+	}
 }
 
 int main()
