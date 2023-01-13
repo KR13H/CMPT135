@@ -22,10 +22,10 @@ int getDaysBetween(const Date d1, const Date d2)
 
 Date getDateBetween(const Date d1, const Date d2)
 {
-	Date d;
-	d.day = abs(d2.day - d1.day);
-	d.month = abs(d2.month - d1.month);
-	d.year = abs(d2.year - d1.year);
+	int x;
+	date d;
+	d.year = x/ 360;
+	x = x % 360;
 	return d;
 }
 
