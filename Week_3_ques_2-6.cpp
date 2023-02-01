@@ -119,74 +119,93 @@ bool RationalNumber::isGreaterThan(const RationalNumber& r) const
 }
 bool RationalNumber::isGreaterThanOrEqual(const RationalNumber& r) const
 {
-	if(this->a * r.b >= r.a * this->b)
+	if(isEqual(r))
 		return true;
+	else if(this->a * r.b >= r.a * this->b)
+		return true;
+	else
 	return false;
 }
 bool RationalNumber::isLessThan(const RationalNumber& r) const
 {
-	if(isEqual(r))
+	if(isGreaterThan(r))
 		return false;
 	return true;
 }
 bool RationalNumber::isLessThanOrEqual(const RationalNumber& r) const
 {
-	if(isGreaterThanOrEqual(r))
+	if(isEqual(r))
+		return true;
+	else if(isGreaterThanOrEqual(r))
 		return false;
+	else
 	return true;
 }
 
 int main()
 {
-	//Test constructors
-	RationalNumber r1, r2(5,6);
-	const RationalNumber* r3 = new RationalNumber();  //we can not give a varaible on the heap as a const 
-	const RationalNumber* r4;
-	r4 = new RationalNumber(4, -6);
+	////Test constructors
+	//RationalNumber r1, r2(5,6);
+	//const RationalNumber* r3 = new RationalNumber();  //we can not give a varaible on the heap as a const 
+	//const RationalNumber* r4;
+	//r4 = new RationalNumber(4, -6);
 
-	/*
-	//Test getters
-	cout << "r1 numerator is " << r1.getNum() << endl;
-	cout << "r3 denominator is " << r3->getDen() << endl;
+	///*
+	////Test getters
+	//cout << "r1 numerator is " << r1.getNum() << endl;
+	//cout << "r3 denominator is " << r3->getDen() << endl;
+	////Test setters, standardize, reduce and print member functions
+	//r2.setDen(-10);
+	//cout << "r2 is now "; r2.print(); cout << endl;
+	////Print all the objects
+	//cout << "r1 = "; r1.print(); cout << endl;
+	//cout << "r2 = "; r2.print(); cout << endl;
+	//cout << "r3 = "; r3->print(); cout << endl;
+	//cout << "r4 = "; r4->print(); cout << endl;
+	////Test toDouble member function
+ //   cout << "In double format, r4 = " << r4->toDouble() << endl;
+	//*/
+	//if(r1.isNotEqual(r2))
+	//	cout << "r1 and r2 are not equal" << endl;
+	//else
+	//	cout << "r1 and r2 are equal" << endl;
 
-	//Test setters, standardize, reduce and print member functions
-	r2.setDen(-10);
-	cout << "r2 is now "; r2.print(); cout << endl;
+	//if(r4->isNotEqual(r2))
+	//	cout << "r4 and r2 are not equal" << endl;
+	//else
+	//	cout << "r2 and r4 are equal" << endl;
 
-	//Print all the objects
-	cout << "r1 = "; r1.print(); cout << endl;
-	cout << "r2 = "; r2.print(); cout << endl;
-	cout << "r3 = "; r3->print(); cout << endl;
-	cout << "r4 = "; r4->print(); cout << endl;
-
-	//Test toDouble member function
-    cout << "In double format, r4 = " << r4->toDouble() << endl;
-	*/
-	if(r1.isNotEqual(r2))
-		cout << "r1 and r2 are not equal" << endl;
-	else
-		cout << "r1 and r2 are equal" << endl;
-
-	if(r4->isNotEqual(r2))
-		cout << "r4 and r2 are not equal" << endl;
-	else
-		cout << "r2 and r4 are equal" << endl;
-
-	if(r4->isGreaterThan(r1))
-		cout << "Yes r2 is greater than r1" << endl;
-	else
-		cout << "No r2 is not greater than r1" << endl;
+	//if(r4->isGreaterThan(r1))
+	//	cout << "Yes r2 is greater than r1" << endl;
+	//else
+	//	cout << "No r2 is not greater than r1" << endl;
 
 
 
-	//Delete objects created on the heap
-	delete r3;
-	delete r4;
+	////Delete objects created on the heap
+	//delete r3;
+	//delete r4;
+
+
+	RationalNumber r1, r2(3, 4), r3(1, 2);
+    std::cout << "r1: "; r1.print(); std::cout << std::endl;
+    std::cout << "r2: "; r2.print(); std::cout << std::endl;
+    std::cout << "r3: "; r3.print(); std::cout << std::endl;
+
+    r1.setNum(2); r1.setDen(5);
+    std::cout << "r1 after setting: "; r1.print(); std::cout << std::endl;
+
+    std::cout << "r2 to double: " << r2.toDouble() << std::endl;
+    r2.reduce();
+    std::cout << "r2 after reducing: "; r2.print(); std::cout << std::endl;
+
+    std::cout << "Is r2 equal to r3? " << (r2.isEqual(r3) ? "True" : "False") << std::endl;
+    std::cout << "Is r2 not equal to r3? " << (r2.isNotEqual(r3) ? "True" : "False") << std::endl;
+    std::cout << "Is r2 greater than r3? " << (r2.isGreaterThan(r3) ? "True" : "False") << std::endl;
+    std::cout << "Is r2 greater than or equal to r3? " << (r2.isGreaterThanOrEqual(r3) ? "True" : "False") << std::endl;
+    std::cout << "Is r2 less than r3? " << (r2.isLessThan(r3) ? "True" : "False") << std::endl;
+    std::cout << "Is r2 less than or equal to r3? " << (r2.isLessThanOrEqual(r3) ? "True" : "False") << std::endl;
 
 	system("Pause");
 	return 0;
 	}
-
-
-
-
