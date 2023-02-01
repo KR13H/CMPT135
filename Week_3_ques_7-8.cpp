@@ -26,6 +26,13 @@ public:
 	bool isGreaterThanOrEqual(const RationalNumber& r) const;
 	bool isLessThan(const RationalNumber& r) const;
 	bool isLessThanOrEqual(const RationalNumber& r) const;
+
+
+	//Overloaded operators 
+	bool operator<(const RationalNumber& r) const;
+	bool operator>(const RationalNumber& r) const;
+	friend istream& operator>>(istream& in, RationalNumber& r);
+	friend ostream& operator<<(ostream& out, const RationalNumber& r);
 };
 //Constructors
 RationalNumber::RationalNumber() 
@@ -141,77 +148,78 @@ bool RationalNumber::isLessThanOrEqual(const RationalNumber& r) const
 		return false;
 	return true;
 }
-
-//Other functions 
-//Pre-condition: takes an array of rational numbers as an inpiut and computes the max
-//Post-condition: returns the rational number that is max
-RationalNumber Max(RationalNumber* r, int size)
+istream& operator>>(istream& in, RationalNumber& r)
 {
-	double max = r[0].toDouble();
-	int index = 0;
-	for(int i = 1; i < size; i++)
+	cout << endl;
+	cout << "\t Please enter the numerator: ";
+	in >> r.a;
+	cout << "\t Please enter the denominator: ";
+	in >> r.b;
+	//In case the input value for the denominator is zero, read it again 
+	while(r.b == 0)
 	{
-		if(max < r[i].toDouble()){
-			max = r[i].toDouble();
-			index = i; }
+		cout << "Denominator can not be zero. Please enter a non-zero denominator ";
+		in >> r.b;
 	}
-	return r[index];
+	r.standardize();
+	r.reduce();
+	return in;
 }
 
-RationalNumber Min(RationalNumber* r, int size)
+ostream& operator<<(ostream& out, const RationalNumber& r)
 {
-	double min = r[0].toDouble();
-	int index = 0;
-	for(int i = 1; i < size; i++)
-	{
-		if(min > r[i].toDouble()){
-			min = r[i].toDouble();
-			index = i; }
-	}
-	return r[index];
-}
-//this function will check whether the array created has any positive rational number
-bool isPositive(RationalNumber* r, int size)
-{
-	for(int i = 0; i < size; i++)
-	{
-		if(r[i].getNum() >= 0 && r[i].getDen() >= 0)
-			return true;
-		return false;
-	}
+	out << r.a << "/ " << r.b << endl;
+	return out;
 }
 
+bool RationalNumber::operator<(const RationalNumber& r) const
+{
+	return this->a*r.b < r.a*this->b;
+}
+bool RationalNumber::operator>(const RationalNumber& r) const
+{
+	return this->a*r.b > r.a*this->b;
+}
 
 int main()
 {
 	int size;
 	cout << "Please enter the size of the array: ";
 	cin >> size;
-	RationalNumber* A = new RationalNumber[size];
-	cout << "Elements of the array are: " << endl;
-	//Printing elements of the array
+	
+	//Declare a dynamic array
+	RationalNumber* Arr = new RationalNumber[size];
+	//set the num and dem to a rand number in the range[-5, 5]
 	for(int i = 0; i < size; i++)
 	{
-		A[i].print(); cout << endl;
-	}
-	
-	if(isPositive(A,size) == false)
-	{
-		cout << "No minimum or maximum elements" << endl;
-		system("Pause");
-		return 0;
+		Arr[i].setNum(rand()%11 - 5);
+		Arr[i].setDen(rand()%11 - 5);
 	}
 
-	RationalNumber M = Max(A,size);
-	cout << "Maximum number is "; M.print(); cout << endl; 
-	RationalNumber m = Min(A,size);
-	cout << "Minimum number is "; m.print(); cout << endl;
-	
+
+	//Print all the elements of the array
+	cout << "All the elements of the array are: " << endl;
+	for(int i = 0; i < size; i++)
+	{
+		cout << Arr[i] << endl;
+	}
+
+	//let the first element of the array to be the max and min
+	RationalNumber max = Arr[0];
+	RationalNumber min = Arr[0];
+
+	for(int i = 1; i < size; i++)
+	{
+		if(Arr[i] < min)
+			min = Arr[i];
+		if(Arr[i] > max)
+			max = Arr[i];
+	}
+
+	//Print the max and min element in the array
+	cout << "The max element in the array is " << max << endl;
+	cout << "The min element in the array is " << min << endl;
 
 	system("Pause");
 	return 0;
-	}
-
-
-
-
+}
