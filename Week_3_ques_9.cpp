@@ -127,3 +127,57 @@ int main()
 	system("Pause");
 	return 0;
 }
+
+
+////////////////////////////////////////OR//////////////////////////////////////////////////////////////////////////////
+
+
+
+#include <iostream>
+
+class ComplexNumber {
+ public:
+  ComplexNumber(double real_part, double imaginary_part)
+      : real(real_part), imaginary(imaginary_part) {}
+
+  double getReal() const { return real; }
+  double getImaginary() const { return imaginary; }
+  void setReal(double real_part) { real = real_part; }
+  void setImaginary(double imaginary_part) { imaginary = imaginary_part; }
+
+  ComplexNumber operator+(const ComplexNumber &other) const {
+    return ComplexNumber(real + other.real, imaginary + other.imaginary);
+  }
+
+  ComplexNumber operator-(const ComplexNumber &other) const {
+    return ComplexNumber(real - other.real, imaginary - other.imaginary);
+  }
+
+  ComplexNumber operator*(const ComplexNumber &other) const {
+    return ComplexNumber(real * other.real - imaginary * other.imaginary,
+                        real * other.imaginary + imaginary * other.real);
+  }
+
+  friend std::ostream &operator<<(std::ostream &os, const ComplexNumber &c) {
+    os << c.real << " + " << c.imaginary << "i";
+    return os;
+  }
+
+ private:
+  double real;
+  double imaginary;
+};
+
+int main() {
+  ComplexNumber c1(1, 2);
+  ComplexNumber c2(3, 4);
+  ComplexNumber c3 = c1 + c2;
+  ComplexNumber c4 = c1 - c2;
+  ComplexNumber c5 = c1 * c2;
+  std::cout << "c1: " << c1 << std::endl;
+  std::cout << "c2: " << c2 << std::endl;
+  std::cout << "c3 (c1 + c2): " << c3 << std::endl;
+  std::cout << "c4 (c1 - c2): " << c4 << std::endl;
+  std::cout << "c5 (c1 * c2): " << c5 << std::endl;
+  return 0;
+}
