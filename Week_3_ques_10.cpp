@@ -1,104 +1,64 @@
 #include <iostream>
-using namespace std;
 
-class Weight 
-{
-private:
-	int pound, ounce;
-public:
-	//Constructors
-	Weight();
-	Weight(const int& p, const int& o);
+class Weight {
+    private:
+        int pounds;
+        int ounces;
 
-	//setters
-	void setPound(const int& p);
-	void setOunce(const int& o);
+    public:
+        // Constructors
+        Weight() {
+            pounds = 0;
+            ounces = 0;
+        }
 
-	//getters
-	int getPound() const;
-	int getOunce() const;
+        Weight(int p, int o) {
+            pounds = p + o / 16;
+            ounces = o % 16;
+            if (ounces < 0) {
+                pounds--;
+                ounces += 16;
+            }
+        }
 
-	//operators
-	//w + w
-	Weight operator+(const Weight& w) const; 
-	//++w
-	Weight& operator++();
-	//W++
-	Weight operator++(int DUMMY);
+        // Getters
+        int getPounds() {
+            return pounds;
+        }
 
-	//input streaming operator
-	friend istream& operator>>(istream& in, Weight& w);
-	friend ostream& operator<<(ostream& out, const Weight& w);
+        int getOunces() {
+            return ounces;
+        }
+
+        // Setters
+        void setPounds(int p) {
+            pounds = p;
+        }
+
+        void setOunces(int o) {
+            ounces = o % 16;
+            if (o < 0) {
+                pounds = pounds + o / 16 - 1;
+                ounces = 16 + o % 16;
+            } else {
+                pounds = pounds + o / 16;
+                ounces = o % 16;
+            }
+        }
 };
 
-//Constructors
-Weight::Weight(): pound(0), ounce(0) {}
-Weight::Weight(const int& p, const int& o){
-		pound = (p < 0) ? 0 : p;
-		ounce = (o < 0 || o > 15) ? 0 : o;
-	}
-
-//setters
-void Weight::setPound(const int& p){pound = p;}
-void Weight::setOunce(const int& o){ounce = o;}
-
-//getters
-int Weight::getPound() const{return pound;}
-int Weight::getOunce() const{return ounce;}
-
-//operators
-//w + w
-Weight Weight::operator+(const Weight& w) const{
-	int p1 = this-> pound;
-	int o1 = this-> ounce;
-	int p2 = w.pound;
-	int o2 = w.ounce;
-	Weight ans(p1+p2, o1+o2);
-	return ans;}
-//doube pre-increment is fine but post is not fine
-//++ ++ w
-//Pre-increment 
-Weight& Weight::operator++(){
-	Weight temp(1,1);
-	*this = *this + temp;
-	return *this;}
-
-//double post-increment is not fine 
-//i.e. w++ ++ is wrong
-//Post increment
-Weight Weight::operator++(int DUMMY){
-	Weight temp = *this;
-	Weight add(1,1);
-	*this = *this + add;
-	return temp;}
-
-//input streaming operator
-istream& operator>>(istream& in, Weight& w){
-	cout << endl;
-	cout << "\tPlease enter the weight in pounds: ";
-	in >> w.pound;
-	cout << "\tPlease enter the weight in ounces: ";
-	in >> w.ounce;
-	return in;}
-ostream& operator<<(ostream& out, const Weight& w){
-	out << w.pound << " Pounds and " << w.ounce << " Ounces";
-	return out;}
-
-int main()
+int main() 
 {
-	Weight w1, w2(13,3), w3(15,15);
-	cout << "w1: " << w1 << endl;
-	cout << "w2: " << w2 << endl;
-	w1 = w2 + w3;
-	cout << "w1: " << w1 << endl;
-	++ ++w1;
-	cout << "w1: " << w1 << endl;
-	Weight w4;
-	cout << "Please enter the values for w4: ";
-	cin >> w4;
-	cout << "w4: " << w4 << endl;
+    Weight w1;
+    Weight w2(5, 20);
 
-	system("Pause");
-	return 0;
+    std::cout << "Weight 1: " << w1.getPounds() << " pounds " << w1.getOunces() << " ounces" << std::endl;
+    std::cout << "Weight 2: " << w2.getPounds() << " pounds " << w2.getOunces() << " ounces" << std::endl;
+
+    w1.setPounds(6);
+    w1.setOunces(20);
+    std::cout << "Weight 1: " << w1.getPounds() << " pounds " << w1.getOunces() << " ounces" << std::endl;
+
+    system("Pause");
+    return 0;
 }
-
