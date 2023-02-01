@@ -219,6 +219,8 @@ int main()
 	//Print the max and min element in the array
 	cout << "The max element in the array is " << max << endl;
 	cout << "The min element in the array is " << min << endl;
+	
+	delete[] Arr;
 
 	system("Pause");
 	return 0;
