@@ -27,96 +27,12 @@ public:
 	bool isLessThan(const RationalNumber& r) const;
 	bool isLessThanOrEqual(const RationalNumber& r) const;
 
-	//operators
-	RationalNumber operator+(const RationalNumber& r) const;
-	RationalNumber operator+(const int& r) const;
-	friend RationalNumber operator+(const int& x, const RationalNumber& r);
-	//Binary subtraction operator that performs r1 - r2
-	RationalNumber operator-(const RationalNumber& r) const;
-	//Binary subtraction operator that performs r1 - integer
-	RationalNumber operator-(const int& x) const;
-	// Binary subtraction operator that performs integer - r2
-	friend RationalNumber operator-(const int& x, const RationalNumber& r);
-	// Binary multiplication operator that performs r1 * r2
-	RationalNumber operator*(const RationalNumber& r);
-	//Binary multiplication operator that performs r1 * integer
-	RationalNumber operator*(const int& r);
-	//Binary multiplication operator that performs integer * r2
-	friend RationalNumber operator*(const RationalNumber& r, const int& x);
-    //Binary division operator that performs r1 / r2
-	RationalNumber operator/(const RationalNumber& r);
-    //Binary division operator that performs r1 / intege
-	RationalNumber& operator/(const int& x);
-	// Binary division operator that performs integer / r2
-	friend RationalNumber operator/(const RationalNumber& r, const int& x);
-	//Binary compound addition operator that performs r1 += r2 ......i.e. r1.operator+=(r2), will return a rational number (r1+r2) and assign it to r1
-	RationalNumber& operator+=(const RationalNumber& r);
-	//Binary compound addition operator that performs r1 += integer
-	RationalNumber& operator+=(const int& r);
-	// Binary compound subtraction operator that performs r1 -= r2
-	RationalNumber& operator-=(const RationalNumber& r);
-	// Binary compound subtraction operator that performs r1 -= integer
-	RationalNumber& operator-=(const int& r);
-	// Binary compound multiplication operator that performs r1 *= r2
-	RationalNumber& operator*=(const RationalNumber& r);
-	// Binary compound multiplication operator that performs r1 *= integer
-	RationalNumber& operator*=(const int& r);
-	// Binary compound division operator that performs r1 /= r2
-	RationalNumber& operator/=(const RationalNumber& r);
-	// Binary compound division operator that performs r1 /= integer
-	RationalNumber& operator/=(const int& r);
-	// Binary equal operator that performs r1 == r2
-	bool operator==(const RationalNumber& r);
-	// Binary equal operator that performs r1 == integer
-	bool operator==(const int& r);
-	// Binary equal operator that performs integer == r2
-	friend bool operator==(const int& x, const RationalNumber& r1);
-	// Binary notequal operator that performs r1 != r2
-	bool operator!=(const RationalNumber& r);
-	// Binary notequal operator that performs r1 != integer
-	bool operator!=(const int& x);
-	// Binary notequal operator that performs integer != r2
-	friend bool operator!=(const int& x, const RationalNumber& r1);
-	//Binary > operator (r1 > r1)
-	bool operator>(const RationalNumber& r)
-	{
-		if(this->a*r.b > r.a*this->b) return true;
-		return false;
-	}
-	/*
-	// Binary greaterthan operator that performs r1 > r2
-	bool operator>(const RationalNumber& r);
-	// Binary greaterthan operator that performs r1 >integer
-	bool operator>(const int& x);
-	// Binary greaterthan operator that performs integer> r2
-	friend bool operator>(const int& x, const RationalNumber& r1);
-	// Binary lessthan operator that performs r1 < r2
-	bool operator<(const RationalNumber& r);
-	// Binary lessthan operator that performs r1 <integer
-	bool operator<(const int& x);
-	// Binary lessthan operator that performs integer< r2
-	friend bool operator<(const int& x, const RationalNumber& r1);
-	// Binary greaterorequal operator that performs r1 >= r2
-	bool operator>=(const RationalNumber& r);
-	// Binary greaterorequal operator that performs r1 >= integer
-	bool operator>=(const int& x);
-	// Binary greaterorequal operator that performs integer>= r2
-	friend bool operator<(const int& x, const RationalNumber& r1);
-	// Binary lessorequal operator that performs r1 <= r2
-	bool operator<=(const RationalNumber& r);
-	// Binary lessorequal operator that performs r1 <= integer
-	bool operator<=(const int& x);
-	// Binary lessorequal operator that performs integer<= r2
-	friend bool operator<(const int& x, const RationalNumber& r1);
-	*/
-	 //Unary operator pre decrement- - as in --r
-	RationalNumber& operator--();
-	// Unary operator post decrement -- as in r--
-	RationalNumber operator--(int DUMMY);
 
-
-	//SORTING
-	friend void sortArray(RationalNumber* &A, int size);
+	//Overloaded operators 
+	bool operator<(const RationalNumber& r) const;
+	bool operator>(const RationalNumber& r) const;
+	friend istream& operator>>(istream& in, RationalNumber& r);
+	friend ostream& operator<<(ostream& out, const RationalNumber& r);
 };
 //Constructors
 RationalNumber::RationalNumber() 
@@ -232,250 +148,58 @@ bool RationalNumber::isLessThanOrEqual(const RationalNumber& r) const
 		return false;
 	return true;
 }
-
-//Other functions 
-//Pre-condition: takes an array of rational numbers as an inpiut and computes the max
-//Post-condition: returns the rational number that is max
-RationalNumber Max(RationalNumber* r, int size)
+istream& operator>>(istream& in, RationalNumber& r)
 {
-	double max = r[0].toDouble();
-	int index = 0;
-	for(int i = 1; i < size; i++)
+	cout << endl;
+	cout << "\t Please enter the numerator: ";
+	in >> r.a;
+	cout << "\t Please enter the denominator: ";
+	in >> r.b;
+	//In case the input value for the denominator is zero, read it again 
+	while(r.b == 0)
 	{
-		if(max < r[i].toDouble()){
-			max = r[i].toDouble();
-			index = i; }
+		cout << "Denominator can not be zero. Please enter a non-zero denominator ";
+		in >> r.b;
 	}
-	return r[index];
+	r.standardize();
+	r.reduce();
+	return in;
 }
 
-RationalNumber Min(RationalNumber* r, int size)
+ostream& operator<<(ostream& out, const RationalNumber& r)
 {
-	double min = r[0].toDouble();
-	int index = 0;
-	for(int i = 1; i < size; i++)
-	{
-		if(min > r[i].toDouble()){
-			min = r[i].toDouble();
-			index = i; }
-	}
-	return r[index];
+	out << r.a << "/ " << r.b << endl;
+	return out;
 }
-//this function will check whether the array created has any positive rational number
-bool isPositive(RationalNumber* r, int size)
+
+bool RationalNumber::operator<(const RationalNumber& r) const
+{
+	return this->a*r.b < r.a*this->b;
+}
+bool RationalNumber::operator>(const RationalNumber& r) const
+{
+	return this->a*r.b > r.a*this->b;
+}
+void sortArray(RationalNumber*& Arr, const int& size)
 {
 	for(int i = 0; i < size; i++)
 	{
-		if(r[i].getNum() >= 0 && r[i].getDen() >= 0)
-			return true;
-		return false;
-	}
-}
-
-//operators
-RationalNumber  RationalNumber::operator+(const RationalNumber& r) const
-{
-	int a1 = this->a;
-	int b1 = this->b;
-	int a2 = r.a;
-	int b2 = r.b;
-	RationalNumber sum(a1*b2 + a2*b1, b1*b2);
-	return sum;
-}
-RationalNumber  RationalNumber::operator+(const int& r) const
-{
-	RationalNumber temp(r,1);
-	RationalNumber sum = *this + temp;
-	return sum;
-}
-RationalNumber operator+(const int& x, const RationalNumber& r)
-{
-	return r.operator+(x);
-}
-// Binary subtraction operator that performs r1 - r2
-RationalNumber RationalNumber::operator-(const RationalNumber& r) const
-{
-	int a1 = this->a;
-	int b1 = this->b;
-	int a2 = r.a;
-	int b2 = r.b;
-	RationalNumber diff(a1*b2 - a2*b1, b1*b2);
-	return diff;
-}
-//Binary subtraction operator that performs r1 - integer
-RationalNumber RationalNumber::operator-(const int& x) const
-{
-	RationalNumber temp(x,1);
-	return *this - temp;
-}
-// Binary subtraction operator that performs integer - r2
-RationalNumber operator-(const int& x, const RationalNumber& r)
-{
-	RationalNumber sub(x,1);
-	return sub - r;
-}
-//Binary multiplication operator that performs r1 * r2
-RationalNumber RationalNumber::operator*(const RationalNumber& r)
-{
-	int a1 = this->a;
-	int b1 = this-> b;
-	int a2 = r.a;
-	int b2 = r.b;
-	RationalNumber m(a1*a2, b1*b2);
-	return m;
-}
-//Binary multiplication operator that performs r1 * integer
-RationalNumber RationalNumber::operator*(const int& r)
-{
-	RationalNumber temp(r,1);
-	return (*this) * temp;
-}
-//integer*r1
-RationalNumber operator*(const RationalNumber& r, const int& x)
-{
-	return r*x;
-}
-
-//Binary division operator that performs r1 / r2
-RationalNumber RationalNumber::operator/(const RationalNumber& r){
-	int a1 = this-> a;
-	int b1 = this-> b;
-	int a2 = r.a;
-	int b2 = r.b;
-	RationalNumber d(a1*b2, b1*a2);
-	return d;}
-//Binary division operator that performs r1 / intege
-RationalNumber& RationalNumber::operator/(const int& x){
-	RationalNumber temp(x,1);
-		return *this / temp;}
-// Binary division operator that performs integer / r2
-RationalNumber operator/(const RationalNumber& r, const int& x){
-	RationalNumber temp(x,1);
-	return temp/r;}
-
-//Binary compound addition operator that performs r1 += r2 ......i.e. r1.operator+=(r2), will return a rational number (r1+r2) and assign it to r1
-RationalNumber& RationalNumber::operator+=(const RationalNumber& r){
-	*this = *this + r;
-	return *this;}
-//Binary compound addition operator that performs r1 += integer
-RationalNumber& RationalNumber::operator+=(const int& r){
-	RationalNumber temp(r,1);
-	*this = *this + r;
-	return *this;}
-// Binary compound subtraction operator that performs r1 -= r2
-RationalNumber& RationalNumber::operator-=(const RationalNumber& r){
-	*this = *this - r;
-	return *this;}
-
-// Binary compound subtraction RationalNumber::operator that performs r1 -= integer
-RationalNumber& RationalNumber::operator-=(const int& r){
-	RationalNumber temp(r,1);
-	*this = *this - r;
-	return *this;}
-
-// Binary compound multiplication operator that performs r1 *= r2
-RationalNumber& RationalNumber::operator*=(const RationalNumber& r){
-	*this = *this * r;
-	return *this;}
-// Binary compound multiplication operator that performs r1 *= integer
-RationalNumber& RationalNumber::operator*=(const int& r){
-	RationalNumber temp(r,1);
-	*this = *this * r;
-	return *this;}
-// Binary compound division operator that performs r1 /= r2
-RationalNumber& RationalNumber::operator/=(const RationalNumber& r){
-	*this = *this / r;
-	return *this;}
-
-// Binary compound division operator that performs r1 /= integer
-RationalNumber& RationalNumber::operator/=(const int& r){
-	RationalNumber temp(r,1);
-	*this = *this / r;
-	return *this;}
-// Binary equal operator that performs r1 == r2
-bool RationalNumber::operator==(const RationalNumber& r){
-	if(this->isEqual(r))
-		return true;
-	return false;
-}
-// Binary equal operator that performs r1 == integer
-bool RationalNumber::operator==(const int& x){
-	RationalNumber temp(x,1);
-	return *this==temp;
-}
-// Binary equal operator that performs integer == r2
-bool operator==(const int& x, const RationalNumber& r1){
-RationalNumber temp(x,1);
-bool b = (temp.operator==(r1));
-return b;                                     //****************why cann't we do r1 == temp
-}
-// Binary notequal operator that performs r1 != r2
-bool RationalNumber::operator!=(const RationalNumber& r){
-if(*this == r)return false;
-return true;}
-// Binary notequal operator that performs r1 != integer
-bool RationalNumber::operator!=(const int& x){
-if(*this==x)return false;
-return true;}
-// Binary notequal operator that performs integer != r2
-bool operator!=(const int& x, const RationalNumber& r1){ //******************why is it giving a error here
-	RationalNumber temp(x,1);
-	if(temp != r1) return true;
-	return false;
-}
-//// Binary greaterthan operator that performs r1 > r2
-//bool RationalNumber::operator>(const RationalNumber& r1, const RationalNumber& r2){}
-//// Binary greaterthan operator that performs r1 >integer
-//friend bool RationalNumber::operator>(const RationalNumber& r1, const int& x){}
-//// Binary greaterthan operator that performs integer> r2
-//friend bool RationalNumber::operator>(const int& x, const RationalNumber& r1){}
-//// Binary lessthan operator that performs r1 < r2
-//friend bool RationalNumber::operator<(const RationalNumber& r1, const RationalNumber& r2){}
-//// Binary lessthan operator that performs r1 <integer
-//friend bool RationalNumber::operator<(const RationalNumber& r1, const int& x){}
-//// Binary lessthan operator that performs integer< r2
-//friend bool RationalNumber::operator<(const int& x, const RationalNumber& r1){}
-//// Binary greaterorequal operator that performs r1 >= r2
-//friend bool RationalNumber::operator>=(const RationalNumber& r1, const RationalNumber& r2){}
-//// Binary greaterorequal operator that performs r1 >= integer
-//friend bool RationalNumber::operator>=(const RationalNumber& r1, const int& x){}
-//// Binary greaterorequal operator that performs integer>= r2
-//friend bool RationalNumber::operator<(const int& x, const RationalNumber& r1){}
-//// Binary lessorequal operator that performs r1 <= r2
-//friend bool RationalNumber::operator<=(const RationalNumber& r1, const RationalNumber& r2){}
-//// Binary lessorequal operator that performs r1 <= integer
-//friend bool RationalNumber::operator>=(const RationalNumber& r1, const int& x){}
-//// Binary lessorequal operator that performs integer<= r2
-//friend bool RationalNumber::operator<(const int& x, const RationalNumber& r1){}
-
-// Unary operator pre decrement- - as in --r
-RationalNumber& RationalNumber::operator--(){
-	*this = *this + 1;
-	return *this;
-}
-// Unary operator post decrement -- as in r--
-RationalNumber RationalNumber::operator--(int DUMMY){
-	RationalNumber temp = *this;
-	*this = *this + 1;
-	return temp;
-}
-
-//Sorting 
-void sortArray(RationalNumber* &A, int size)
-{
-	for(int i = 0; i < size; i++)
-	{
+		int count = 0;
 		for(int j = 0; j < size - 1 - i; j++)
 		{
-			if(A[j].a * A[j+1].b > A[j+1].a * A[j].b)
+			if(Arr[j] > Arr[j+1])
 			{
-				RationalNumber temp = A[j];
-				A[j] = A[j+1];
-				A[j+1] = temp;
+				RationalNumber temp = Arr[j];
+				Arr[j] = Arr[j+1];
+				Arr[j+1] = temp;
+				count++;
 			}
 		}
+		if(count == 0)
+			break;
 	}
 }
+
 
 
 
@@ -485,35 +209,50 @@ int main()
 	int size;
 	cout << "Please enter the size of the array: ";
 	cin >> size;
-	RationalNumber* A = new RationalNumber[size];
-	cout << "Elements of the array are: " << endl;
-	//Printing elements of the array
+	
+	//Declare a dynamic array
+	RationalNumber* Arr = new RationalNumber[size];
+	//set the num and dem to a rand number in the range[-5, 5]
 	for(int i = 0; i < size; i++)
 	{
-		A[i].print(); cout << endl;
-	}
-	
-	if(isPositive(A,size) == false)
-	{
-		cout << "No minimum or maximum elements" << endl;
-		system("Pause");
-		return 0;
+		Arr[i].setNum(rand()%11 - 5);
+		Arr[i].setDen(rand()%11 - 5);
 	}
 
-	RationalNumber M = Max(A,size);
-	cout << "Maximum number is "; M.print(); cout << endl; 
-	RationalNumber m = Min(A,size);
-	cout << "Minimum number is "; m.print(); cout << endl;
-	
-	sortArray(A, size);
-	cout << "Elements of the array after sorting: " << endl;
+
+	//Print all the elements of the array
+	cout << "All the elements of the array are: " << endl;
 	for(int i = 0; i < size; i++)
 	{
-		A[i].print(); cout << endl;
+		cout << Arr[i] << endl;
+	}
+
+	//let the first element of the array to be the max and min
+	RationalNumber max = Arr[0];
+	RationalNumber min = Arr[0];
+
+	for(int i = 1; i < size; i++)
+	{
+		if(Arr[i] < min)
+			min = Arr[i];
+		if(Arr[i] > max)
+			max = Arr[i];
+	}
+
+	//Print the max and min element in the array
+	cout << "The max element in the array is " << max << endl;
+	cout << "The min element in the array is " << min << endl;
+
+	//sort the array
+	sortArray(Arr,size);
+	cout << "After sorting: " << endl;
+	for(int i = 0; i < size; i++)
+	{
+		cout << Arr[i] << endl;
 	}
 	
+	delete[] Arr;
+
 	system("Pause");
 	return 0;
-	}
-
-
+}
