@@ -186,29 +186,35 @@ void SmartArray::removeAll(const int& r)
 //Example L1 = [1, 2, 3] and L2=[2, 5]. Then L3 = L1 + L2; should result to L3 = [1, 2, 3, 2, 5]
 SmartArray SmartArray::operator+(const SmartArray& s) const
 {
-	if(this->size + s.getSize() > 0)
-	{
-		SmartArray sum;
-		sum.A = new int[this->size + s.getSize()];
-		sum.size = this->size + s.getSize();
+	SmartArray ans;
+	ans = *this;
+	
+	for(int i = 0; i < s.size(); i++)
+		ans.append(L[i]);
+	    
+	//if(this->size + s.getSize() > 0)
+	//{
+		//SmartArray sum;
+		//sum.A = new int[this->size + s.getSize()];
+		//sum.size = this->size + s.getSize();
 		//cout << "*******" << sum.size << endl;
 		//Copy L1 in sum
-		for(int i = 0; i < this->size; i++)
-		{
-			sum.A[i] = this->A[i];
-		}
+		//for(int i = 0; i < this->size; i++)
+		//{
+			//sum.A[i] = this->A[i];
+		//}
 		//Copy L2 in sum
-		for(int i = this->size, j = 0; i < sum.size; i++,j++)
-		{
-			sum.A[i] = s.A[j];
-		}
-		return sum;
-	}
-	else
-	{
-		SmartArray sum;
-		return sum;
-	}
+		//for(int i = this->size, j = 0; i < sum.size; i++,j++)
+		//{
+			//sum.A[i] = s.A[j];
+		//}
+		//return sum;
+	//}
+	//else
+	//{
+		//SmartArray sum;
+		return ans;
+	//}
 }
 //12. Consider the SmartArray class we implemented during the lecture. Add a binary operator ==member 
 //function that has a SmartArray operand on the left hand side and a SmartArray operand on the right hand 
