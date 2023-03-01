@@ -1,4 +1,4 @@
-﻿//7. Create a text file named ClassList.txt manually using notepad and edit it as follows
+//7. Create a text file named ClassList.txt manually using notepad and edit it as follows
 //John Walter 20 19 45
 //Sara Gill 16 15 35
 //Mark Black 23 24 50
