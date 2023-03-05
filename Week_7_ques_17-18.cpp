@@ -52,7 +52,6 @@ void reOrderObjects(vector<Vehicle>& v)
 	//vector<Vehicle> in = readVehicleInventory("inventory.txt");
 	vector<Vehicle> ans;
 	Vehicle temp;
-	bool already_added = false;
 	for(int i = 0; i < v.size(); i++)
 	{
 		if(is_found(ans,v[i]))
